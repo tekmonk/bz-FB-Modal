@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ppc.bz Facebook Modal Window</title>
+<link href="css/fbmodal.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="msgFBmodal.js"></script>
+<style type="text/css">
+#container {
+	width:700px;
+	padding:10px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+}
+p{line-height: 160%;}
+p, li{padding:0px 0px 10px 0px;}
+h1{ font-size:24px;}
+h2{ font-size:18px;}
+pre, code{background-color:#CCC; border:1px solid #333; padding:5px;}
+</style>
+</head>
+<body>
+<div id="container">
+	<h1>PPC.bz Facebook-style Modal Window</h1>
+    <p>Basically a modal window is a "popup" that remains in the same window the user is viewing.  Modals are less intrusive than popups / new windows. </p>
+    <p>Brought to you by <a href="http://www.ppc.bz" target="_blank">ppc.bz</a></p>
+
+	<h2>Notes</h2>
+	<ul>
+		<li><strong>Where can I use this?</strong> - On any HTML page really. It seems that it would be more effective using this script within Facebook based marketing, such as Apps or Pages</li>
+    	<li><strong>Why?</strong> - At the time of writing (mid 2010), there was a lack of a good modal script in the "Facebook" style. <a href="http://defunkt.io/facebox/" target="_blank">The best one I found was this script</a>.  I ripped a lot of the styling from this script (therefore the linkback), but the functionality still needed work.</li>
+   	</ul>
+	    
+    <h2>Caveats</h2>
+    <p>This script builds a DOM element (like most modals), but unfortunately it requires a table to draw it.  This shouldn't be an issue for most people, but 
+    the general "best practice" for design nerds is to not use tables for formatting.  It's certainly possible to modify the script to use CSS only but I don't have time for that. </p>
+    
+    <h2>Files</h2>
+	<ul>
+    	<li><strong>jQuery</strong> - Requires jQuery 1.6.2 at least.  Use <a href="http://code.google.com/apis/libraries/devguide.html" target="_blank">Google's CDN to make the web</a> a better place.</li>
+		<li><strong>msgFBModal.js</strong> - Obviously you need to include the script in your page too.</li>
+        <li><strong>CSS</strong> - include the fbmodal.css for formatting.  You can edit this as you wish.</li>
+        <li><strong>Images</strong> - some images are required to give the window that FB look. </li>
+    </ul>
+	<h2>Usage</h2>
+    <p>Simple enough - Attach "fbmodal" to a <strong>Selector</strong> (preferrably an "id") with an <strong>Event</strong> (like a "click" event). See demos for more.</p>
+    <p>
+    	<code>
+        	$('#mySelector').live('click',function(){
+				$.fbmodal({
+					/*	settings go here	*/
+				});
+		});</code>
+    </p>
+    <h2>Settings</h2>
+    <ul>
+    	<li><strong>type</strong> - <em>option</em> "type" of modal window.
+        	<ul>
+            	<li><em>info</em> (default) - only the "OK" button is shown.</li>
+                <li><em>warning</em> - shows "Yes" "No" and "Cancel."  You can provide a callback function is the user clicks yes</li>
+			</ul>
+        </li>
+      	<li><strong>title</strong> -  <em>string</em> (defaults to "My Title") The title on the fbmodal window. </li> 
+      	<li><strong>text</strong> - <em>string</em> (defaults to "Default Text") The "text" within the main body of the window.  <strong>This text can have HTML!</strong> Check demo2 for example.</li>
+      	<li><strong>loading</strong> - <em>string</em> (defaults to "Loading...") What is shown in the window while something is loading (usually while Ajax is retrieving something).  This can be plain text, or an &laquo;img&raquo; tag</li> 
+      	<li><strong>width</strong> - <em>css value</em> (defaults to 300px) The width, in pixels or a %, of the modal window. </li>
+      	<li><strong>modaltop</strong> - <em>css value</em> (defaults to 10%) The distance, in pixels or a %, of the modal window from the top of your document window. </li>
+      	<li><strong>overlay</strong> - <em>true / false </em> (defaults to true) Show an overlay behind the modal window.  <strong>Note:</strong> This attaches a div, and adds the "fbmodal_overlay" class to it that uses RGBa color values, <a href="http://css-tricks.com/examples/RGBaSupport/" target="_blank">which are not supported in all browsers</a>.</li>        
+      	<li><strong>overlayClose</strong> - <em>true / false</em> (defaults to true) If true, users can click outside the modal window to close the modal box (They are clicking on the "fbmodal_overlay" div explained above, which triggers it to close)</li>
+      	<li><strong>escClose</strong> - <em>true / false</em> (defaults to true) If true, cicking the "ESCape" button the keyboard closes the window.</li>        
+      	<li><strong>closeTrigger</strong> - <em>true / false </em> (defaults to true) If true, shows an "X" in the top right of the "title" to allow closing the window.</li>
+    	<li><strong>method</strong> - how it gets / displays information
+        	<ul>
+            	<li><em>text</em> (default) - shows provided text.</li>
+                <li><em>ajax</em> - Uses ajax to get content from another file.</li>
+			</ul>
+        </li>
+    	<li><strong>url</strong> - (defaults to none) if using "ajax" method, the URL of the file to access. By default it will just grab the page and put it in the modal box.  Use "loaddata" and server-side magic to customize the response text.</li> 
+    	<li><strong>loaddata</strong> - (object, defaults to empty string) if using "ajax" method, an object of data to pass with the request.</li>
+    	<li><strong>buttons</strong> - (object(s)) pass in custom buttons to override default buttons.  This has not been tested thoroughly so maybe stick with the default button settings.
+        	<ul>
+				<li>"type" must be set to 'info' to override buttons.  'warning' will use its default buttons and not override</li>
+            	<li><em>text</em> "string" - the button's text.</li>
+                <li><em>color</em> - "blue / grey" - color of the button</li>
+                <li><em>callback</em> - When passing custom buttons, if you are providing a custom callback, you are overwriting the default close behavior.  Add <strong>$.fbmodal.close();</strong> to your callbacks if you want the window to close on button click.</li>
+			</ul>
+        </li>        
+    </ul>    
+
+	<h1>Demos</h1>
+    <h3>Demo 1 - No / Default Settings</h3>
+    <p><a href="#" id="demo1">Click here for Demo 1 to see Default Settings</a> (No settings passed)</p>
+	<pre>
+$('#demo1').live('click',function(e){
+	$.fbmodal({
+	/*	input settings as object, key/value pairs duh	*/
+	});
+});
+	</pre>
+
+    <h3>Demo 2 - Basic Settings</h3>
+    <p>Let's try it with some basic settings.  Here we have set the method to "warning", set a "title" and "text", and we provide a "callback" function if the user Confirms.</p>
+    <p>
+		<a href="#" id="demo2">Demo 2 - Basic Settings</a> 
+    </p>
+	<pre>
+$('#demo2').live('click',function(e){
+	$.fbmodal({
+		type	: 'warning',
+		title	: 'Warning!  You might have AIDS!',
+		text	: 'Do you think &lt;strong&gt;Shoemoney&lt;/strong&gt; aka, the &lt;a href="http://www.shoemoney.com" target="_blank"&gt;Bald Bomber&lt;/a&gt; is cool?',
+		callback: function(){ alert("Ewww You have AIDS!");},
+		});
+});
+</pre>
+
+	<h3>Demo 3 - Custom Buttons, Forced Click</h3>
+    <p><em>Custom Buttons</em> have not been tested in-depth, but they do work. <br />
+ 	<em>Forcing Click</em> - Notice that all options to close the window have been set to "false," so user will have to click a button to proceed.</p>
+    <p>
+		<a href="#" id="demo3">Demo 3 - Custom Buttons</a> 
+    </p>
+<pre>    
+$('#demo3').live('click',function(e){
+	$.fbmodal({
+		type	: 'info',
+		title	: 'Demo 3 - Custom Buttons',
+		text	: 'Click one of the buttons below to confirm your subscription',
+		closeTrigger	: false,
+		escClose		: false,
+		overlayClose	: false,
+		buttons	: [{ //been had objects
+			'text' : "Click to Confirm",
+			'color'	: "blue",
+			'callback'	: function(){ alert("You Confirmed!"); $.fbmodal.close(); }
+		},{
+			'text' : "or Exit",
+			'color'	: "grey",
+			'callback'	: function(){ alert("You Cancelled"); $.fbmodal.close();}
+		}]
+    });
+});    
+</pre>    
+	<h3>Demo 4 - Ajax</h3>
+    <p>First off, get familiar with <a href="http://api.jquery.com/jQuery.ajax/" target="_blank">jQuery's Ajax API</a></p>
+    <p>By default, this will just grab the file and place it in the fbmodal, but you can also pass in options</p>
+    <p>
+		<a href="#" id="demo4">Demo 4 - Ajax</a> 
+    </p>
+<pre>
+$('#demo4').live('click',function(e){
+	$.fbmodal({
+		loading : '&lt;img src="img/loading.gif" /&gt;',
+		type	: 'info',
+		method	: 'ajax',
+		href	: 'demo.php',
+		title	: 'Demo Number 4 - With Ajax',
+		loaddata: {
+			"myOption" 	: "demo4"
+        },
+        width: 500,
+    });
+});
+</pre>    
+    
+	<h3>Demo 5 - Callback with Ajax</h3>
+    <p>What if we wanted feedback from the user before doing something with Ajax?  We can pass a jQuery Ajax call into the callback function of this script.</p>
+	<p>Notice that the method is "text", not "ajax", because we want to display something (a form)  to the user first. Also notice this is an "info" because "warning" will use its default button set.</p>
+    <p>
+		<a href="#" id="demo5">Demo 5 - Callback with Ajax</a> 
+    </p>    
+    <p>There are a number of ways to do such an Ajax call.  You can make the call to a file and handle it server-side.  This way the responsetext can have its own javascript that you can run on success.  </p>
+<pre>
+$('#demo5').live('click',function(e){
+	$.fbmodal({
+		loading : '&lt;img src="img/loading.gif" /&gt;',
+		type	: 'info',
+		text	: '&lt;form id="form5"&gt;&lt;label for="number"&gt;Select a Number then Push OK&lt;/label&gt;&lt;select name="number" id="number"&gt;&lt;option&gt;Select One&lt;/option&gt;&lt;option value="1"&gt;1&lt;/option&gt;&lt;option value="2"&gt;2&lt;/option&gt;&lt;option value="3"&gt;3&lt;/option&gt;&lt;option value="4"&gt;4&lt;/option&gt;&lt;option value="5"&gt;5&lt;/option&gt;&lt;option value="69"&gt;69&lt;/option&gt;&lt;/select&gt;&lt;/form&gt;',
+		title	: 'Demo Number 5 - Callback, then Ajax',
+		width: 500,
+		buttons	: [{ //been had objects
+			'text' : "Submit That Thing",
+			'color'	: "blue",
+			'callback'	: function(){ 
+				var thisoption = $('#number').val();//get option value
+				if ( thisoption === "Select One"){ alert("Select a godamn number chump");return false;}
+				else {
+                //first empty the contents of the fbmodal "content" area, then put some stuff it in based on what happens with the ajax call
+					$('.fbcontent').empty().append('&lt;div style="padding:10px 50px;"&gt;&lt;img src="img/loading.gif" /&gt;&lt;/div&gt;');
+					$.ajax({
+						type: 'POST',
+						"url" : 'demo.php',
+						"data": {
+							"myOption" 	: "demo5",
+							"myNumber"	: thisoption ,
+						},
+						success:function(data){
+							// do some stuff here with a successful ajax call
+							$('.fbcontent').empty().append("&lt;p&gt;"+data+"&lt;/p&gt;");
+						},error: function(){
+							alert("Failed to load demo.php page");
+						}
+					});//end ajax
+				}//end "else" (no option was selected)
+			}//end first button options
+		}//end first button object
+		,{
+			'text' : "Cancel",
+			'color'	: "grey",
+			'callback'	: function(){ $.fbmodal.close();}
+		}]//end buttons
+    });// end modal
+});
+</pre>    
+    <h3>Positioning</h3>
+	<p>If you want to dynamically position the fbmodal window, you would do it like this...</p>
+    <pre>
+$('#positioned').live('click',function(e){
+/*  Notice that this is a function of "e", the event.  
+    We need this to prevent the default action.  Most of the time, 
+    and by default, this is a function of nothing: function() */
+	var eleposition = $(this).offset(); // get the position of this id ( see jQuery 'offset' documentation)
+	e.preventDefault(); 
+	/* ^ prevent default link action.  
+    	If your link is href="#" then the default action is to jump to that anchor, 
+	    which is basically the top of your window. This prevents that "jump" */
+    $.fbmodal({
+        modaltop : eleposition.top, // put the 'top' distance from the element position here
+        /*	then  the rest of your settings	*/
+        });
+});    	
+	</pre>
+</div>
+
+<script language="javascript" type="text/javascript">
+$.ajaxSetup({
+//			cache:false
+//			processData: false
+//			accepts: 'html'
+			});
+
+$(document).ready(function(){
+
+		$('#demo1').live('click',function(e){
+			// this is here to position the modal without jumping to the top of the page (because of the "#" href)
+			var toppos = $(this).offset(); 	e.preventDefault();
+
+			$.fbmodal({
+				modaltop : toppos.top,
+				/*	input settings as object, key/value pairs duh	*/
+				});
+		});
+
+		$('#demo2').live('click',function(e){
+			// this is here to position the modal without jumping to the top of the page (because of the "#" href)
+			var toppos = $(this).offset(); 	e.preventDefault();
+
+			$.fbmodal({
+				modaltop : toppos.top-100,				
+				type	: 'warning',
+				title	: 'Warning!  You might have AIDS!',
+				text	: 'Does you think <strong>Shoemoney</strong> aka, the <a href="http://www.shoemoney.com" target="_blank">Bald Bomber</a> is cool?',
+				callback: function(){ alert("Ewww You have AIDS!");},
+				});
+			});
+			
+		$('#demo3').live('click',function(e){
+			// this is here to position the modal without jumping to the top of the page (because of the "#" href)
+			var toppos = $(this).offset(); 	e.preventDefault();
+			$.fbmodal({
+				modaltop : toppos.top-100,				
+				type	: 'info',
+				title	: 'Demo 3 - Custom Buttons',
+				text	: 'Click one of the buttons below to confirm your subscription',
+				closeTrigger	: false,
+				escClose		: false,
+				overlayClose	: false,
+				buttons	: [{ //been had objects
+						'text' : "Click to Confirm",
+						'color'	: "blue",
+						'callback'	: function(){ alert("You Confirmed!"); $.fbmodal.close(); }
+					},{
+						'text' : "or Exit",
+						'color'	: "grey",
+						'callback'	: function(){ alert("You Cancelled"); $.fbmodal.close();}
+					}]
+			});
+		});
+
+		$('#demo4').live('click',function(e){
+			// this is here to position the modal without jumping to the top of the page (because of the "#" href)
+			var toppos = $(this).offset(); 	e.preventDefault();			
+			$.fbmodal({
+				modaltop : toppos.top-100,
+				loading : '<img src="img/loading.gif" />',
+				type	: 'info',
+				method	: 'ajax',
+				href	: 'demo.php',
+				title	: 'Demo Number 4 - With Ajax',
+				loaddata: {
+					"myOption" 	: "demo4"
+				},
+				width: 500,
+			});
+		});
+		
+		
+		$('#demo5').live('click',function(e){
+			// this is here to position the modal without jumping to the top of the page (because of the "#" href)
+			var toppos = $(this).offset(); 	e.preventDefault();			
+			$.fbmodal({
+				modaltop : toppos.top-100,
+				loading : '<img src="img/loading.gif" />',
+				type	: 'info',
+				text	: '<form id="form5"><label for="number">Select a Number then Push OK</label><select name="number" id="number"><option>Select One</option><option value="1">1</option><option value="2">2</option>						<option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="69">69</option></select></form>',
+				title	: 'Demo Number 5 - Callback, then Ajax',
+				width: 500,
+				buttons	: [{ //been had objects
+						'text' : "Submit That Thing",
+						'color'	: "blue",
+						'callback'	: function(){ 
+							var thisoption = $('#number').val();
+							if ( thisoption === "Select One"){ alert("Select a godamn number chump");return false;}
+							else {
+								$('.fbcontent').empty().append('<div style="padding:10px 50px;"><img src="img/loading.gif" /></div>');
+								$.ajax({
+									type: 'POST',
+										"url" : 'demo.php',
+										"data": {
+											"myOption" 	: "demo5",
+											"myNumber"	: thisoption ,
+										},
+										success:function(data){
+											// do some stuff here with a successful ajax call
+											$('.fbcontent').empty().append("<p>"+data+"</p>");
+											
+										},error: function(){
+											alert("Failed to load demo.php page");
+										}
+								});//end ajax
+							}//end "else" (no option was selected)
+							
+							}//end first button options
+						}//end first button object
+					,{
+						'text' : "Cancel",
+						'color'	: "grey",
+						'callback'	: function(){ $.fbmodal.close();}
+					}]
+
+				
+			});
+		});		
+
+});	
+</script>
+</body>
+</html>
