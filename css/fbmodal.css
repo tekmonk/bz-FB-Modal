@@ -1,86 +1,97 @@
-
-/* corner formatting*/
-.tl{background-image:url('../img/tl.png');}
-.tr{background-image:url('../img/tr.png');}
-.bl{background-image:url('../img/bl.png');}
-.b{background-image:url('../img/b.png');}
-.br{background-image:url('../img/br.png');}
-
-
-.fbmodal{
+.modelbox
+{
 	position: absolute;
 	left: 0;
 	z-index: 1000;
 	text-align: left;
+	
+	/* Border like styles */
+	background-color: white;
+			
+	-moz-background-clip: padding;     /* Firefox 3.6 */
+	-webkit-background-clip: padding;  /* Safari 4? Chrome 6? */
+	background-clip: padding-box;      /* Firefox 4, Safari 5, Opera 10, IE 9 */
+				 
+	border: 10px solid rgba(0,0,0,0.5);
+				
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
 }
 
-.fbmodal_popup{
+.modelbox_popup{
 	position: relative;
 	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
 	font-size:12px;
-/*margin:0px auto 0px auto;*/
+	/*margin:0px auto 0px auto;*/
 }
 
-.fbmodal_overlay{
+.modelbox_overlay{
 	position: fixed;
 	top: 0px;
 	left: 0px;
 	height:100%;
 	width:100%;
 	z-index: 99;
-	background-color:rgba(0,0,0,.5);
+	background: #ffffff;					/* change color for overlay */
+	
+	/* Overlay transparency */
+	filter: alpha(opacity=70);
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=70);
+	opacity:0.7;
+	-moz-opacity: 0.70; 
 }
 
-.fbmodal_popup table{border-collapse: collapse;}
-.fbmodal_popup td{min-width:10px; border-bottom: 0; padding: 0;}
+.modelbox_popup table{border-collapse: collapse;}
+.modelbox_popup td{min-width:10px; border-bottom: 0; padding: 0;}
 
-.fbmodal_popup .fbcontent{
+.modelbox_popup .fbcontent{
 	padding:10px;
 	font-size:11px;
 }
 
-.fbmodal_popup .fbcontainer{
+.modelbox_popup .fbcontainer{
 	border:solid #555555 1px;
 	border-top:none;
 }
 
-.fbmodal_popup #body{
+.modelbox_popup #body{
 	background: #ffffff;
 	overflow:hidden;
 }
 
-.fbmodal_popup .fbloading{text-align: center;}
+.modelbox_popup .fbloading{text-align: center;}
 
-.fbmodal_popup .image{text-align: center;}
+.modelbox_popup .image{text-align: center;}
 
-.fbmodal_popup img{
+.modelbox_popup img{
 border: 0;
 margin: 0;
 }
-.fbmodal_popup .buttons{	
+.modelbox_popup .buttons{	
 
 }
 
-.fbmodal_popup .footer{
+.modelbox_popup .footer{
 	background:#F0F0F0;
 	border-top:1px solid #DDDDDD;
 	padding:8px;
 	height:40px;
 }
 
-.fbmodal_popup .tl, .fbmodal_popup .tr, .fbmodal_popup .bl, .fbmodal_popup .br{
+.modelbox_popup .tl, .modelbox_popup .tr, .modelbox_popup .bl, .modelbox_popup .br{
 	height: 10px;
 	width: 10px;
 	overflow: hidden;
 	padding: 0;
 }
 
-.fbmodal_hide{
+.modelbox_hide{
 z-index:-100;
 }
 
 
-.fbmodal_popup .title{
+.modelbox_popup .title{
 	padding:6px 6px 6px 8px;
 	background:#6c83b3;
 	border:solid #3b5998 1px;
@@ -90,7 +101,7 @@ z-index:-100;
 	color:#ffffff;
 }
 
-.fbmodal_popup_close{
+.modelbox_popup_close{
 	background: url('../img/close.gif') no-repeat 0 0;
 	float:right;
 	height:20px;
@@ -101,17 +112,17 @@ z-index:-100;
 	top: 2px;
 	overflow: hidden;
 }
-.fbmodal_popup_close:hover{
+.modelbox_popup_close:hover{
 	background-position: 0 -20px;
 }
-.fbmodal_popup .button_outside_border_blue{
+.modelbox_popup .button_outside_border_blue{
 	border:solid #29447e 1px;
 	border-bottom:solid #1a356e 1px;
 	cursor:pointer;
 	float:left;
 }
  
-.fbmodal_popup .button_inside_border_blue{
+.modelbox_popup .button_inside_border_blue{
 	padding:4px 6px 4px 6px;
 	background-color:#5c75a9;
 	border-top:solid #8a9cc2 1px;
@@ -121,16 +132,16 @@ z-index:-100;
 	color:#ffffff;
 }
 
-.fbmodal_popup .button_outside_border_grey{
+.modelbox_popup .button_outside_border_grey{
 	margin-left:5px;
 	border:solid #9b9b9b 1px;
 	cursor:pointer;
 	float:left;
 }
  
-.fbmodal_popup .button_inside_border_grey{
+.modelbox_popup .button_inside_border_grey{
 	padding:4px 6px 4px 6px;
-	background-image:url('../img/fbmodal_cancel.png');
+	background-image:url('../img/modelbox_cancel.png');
 	border-top:solid #ffffff 1px;
 	text-align:center;
 	font-weight:bold;
@@ -138,6 +149,6 @@ z-index:-100;
 	color:#333333;
 }
 
-.fbmodal_popup .right{float:right;}
-.fbmodal_popup .clear{clear:both;}
+.modelbox_popup .right{float:right;}
+.modelbox_popup .clear{clear:both;}
 div.button_inside_border_blue:active{background-color:#4f6aa3;}
